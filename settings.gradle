@@ -1,0 +1,2 @@
+rootProject.name = "Android-OBEX-VerboseDBG-Enabler"
+include ':app'
