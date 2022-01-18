@@ -24,10 +24,14 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       # run: ./gradlew build
-      run: ./gradlew assembleRelease
-      
-    - uses: actions/upload-artifact@v2
+      working-directory: ./project
+      run: |
+        if [ ! -f "gradlew" ]; then gradle wrapper; fi
+        chmod +x gradlew
+        ./gradlew assembleDebug --stacktrace
+    - name: Upload APK
+    # 打包上传生成的 APK 到的网页端
+      uses: actions/upload-artifact@v2
       with:
-        name: upload-apk
-        path: |
-          ${{github.workspace}}/app/build/outputs/apk/release/*.apk
+        name: my-build-apk
+        path: ./**/*.apk
